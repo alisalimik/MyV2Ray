@@ -20,10 +20,9 @@ import (
 	v2filesystem "github.com/xtls/xray-core/common/platform/filesystem"
 	v2core "github.com/xtls/xray-core/core"
 	v2stats "github.com/xtls/xray-core/features/stats"
-	v2serial "github.com/xtls/xray-core/infra/conf/serial"
 	_ "github.com/xtls/xray-core/main/distro/all"
 	v2internet "github.com/xtls/xray-core/transport/internet"
-
+	serial "github.com/xtls/xray-core/infra/conf/serial"
 	v2applog "github.com/xtls/xray-core/app/log"
 	v2commlog "github.com/xtls/xray-core/common/log"
 )
@@ -137,7 +136,7 @@ func (v *V2RayPoint) shutdownInit() {
 
 func (v *V2RayPoint) pointloop() error {
 	log.Println("loading core config")
-	config, err := v2serial.LoadJSONConfig(strings.NewReader(v.ConfigureFileContent))
+	config, err := serial.LoadJSONConfig(strings.NewReader(v.ConfigureFileContent))
 	if err != nil {
 		log.Println(err)
 		return err
@@ -203,7 +202,7 @@ func InitV2Env(envPath string, key string) {
 }
 
 func MeasureOutboundDelay(ConfigureFileContent string, url string) (int64, error) {
-	config, err := v2serial.LoadJSONConfig(strings.NewReader(ConfigureFileContent))
+	config, err := serial.LoadJSONConfig(strings.NewReader(ConfigureFileContent))
 	if err != nil {
 		return -1, err
 	}
